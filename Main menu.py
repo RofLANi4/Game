@@ -120,9 +120,6 @@ class Play(Clicked):
 
 
 class Option(Clicked):
-    def __init__(self):
-        super().__init__()
-
     def button_was_clicked(self, x, y, screen, fonts):
         while True:
             play_screen = pygame.image.load("assets/option.jpg")
