@@ -199,9 +199,6 @@ class MainClass:
             play = Play()
             option = Option()
 
-
-
-
             mouse = pygame.mouse.get_pos()
 
             for event in pygame.event.get():
