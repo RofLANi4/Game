@@ -41,8 +41,7 @@ class Name:
             self.color_change(col[i], dir[i])
 
     def game_name(self,color):
-        font = pygame.font.Font("assets/font.ttf", 50)
-        name = font.render("D R I V E", True, color)
+        name = font(50).render("D R I V E", True, color)
         name_rect = name.get_rect()
         name_rect.center = (self.x/2, self.y/10)
         self.screen.blit(name, name_rect)
