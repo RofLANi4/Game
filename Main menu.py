@@ -229,7 +229,7 @@ def font(size):
     return pygame.font.Font("assets/font.ttf", size)
 
 
-select_sound = pygame.mixer.Sound("assets/FREE SOUND EFFECTS - Video Game Menu Select.ogg")
+select_sound = pygame.mixer.Sound("assets/Game Menu Select.ogg")
 select_sound.set_volume(0.1)
 pygame.mixer.music.load("assets/M.O.O.N - Dust (Synthwave).ogg",)
 pygame.mixer.music.set_volume(0.2)
