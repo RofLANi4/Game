@@ -40,7 +40,7 @@ class Name:
             self.game_name(col[i])
             self.color_change(col[i], dir[i])
 
-    def game_name(self,color):
+    def game_name(self, color):
         name = font(50).render("D R I V E", True, color)
         name_rect = name.get_rect()
         name_rect.center = (self.x/2, self.y/10)
@@ -85,14 +85,14 @@ class Clicked(ABC):
         super().__init__()
 
     @abstractmethod
-    def button_was_clicked(self, x, y, screen, fonts):
+    def buttonWasClicked(self, x, y, screen, fonts):
         pass
 
 
 class Play(Clicked):
-    def button_was_clicked(self, x, y, screen, fonts):
+    def buttonWasClicked(self, x, y, screen, fonts):
         while True:
-            play_screen = pygame.image.load("assets/option.jpg")
+            play_screen = pygame.image.load("assets/game zone.jpg")
             play_screen_rect = play_screen.get_rect()
             screen.blit(play_screen, play_screen_rect)
 
@@ -119,7 +119,7 @@ class Play(Clicked):
 
 
 class Option(Clicked):
-    def button_was_clicked(self, x, y, screen, fonts):
+    def buttonWasClicked(self, x, y, screen, fonts):
         while True:
             play_screen = pygame.image.load("assets/option.jpg")
             play_screen_rect = play_screen.get_rect()
@@ -204,10 +204,10 @@ class MainClass:
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if PLAY.checkForInput(mouse):
                         select_sound.play()
-                        play.button_was_clicked(self.x, self.y, self.screen, font(20))
+                        play.buttonWasClicked(self.x, self.y, self.screen, font(20))
                     if OPTIONS.checkForInput(mouse):
                         select_sound.play()
-                        option.button_was_clicked(self.x, self.y, self.screen, font(45))
+                        option.buttonWasClicked(self.x, self.y, self.screen, font(45))
                     if QUIT.checkForInput(mouse):
                         pygame.quit()
                         sys.exit()
