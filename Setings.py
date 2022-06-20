@@ -1,0 +1,5 @@
+WIDTH = 800
+HEIGTH = 600
+FPS = 30
+VERTICAL_TILE_NUMBER = 11
+tile_size = 64
