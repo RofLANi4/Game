@@ -1,5 +1,6 @@
 import pygame, sys
 from abc import abstractmethod, ABC
+from gameplay1 import Game
 
 
 pygame.init()
@@ -31,7 +32,7 @@ class Name:
         self.screen = screen
         self.x = x
         self.y = y
-        self.col_spd = 25
+        self.col_spd = 16
         self.maximum = 255
         self.minimum = 0
 
@@ -56,6 +57,7 @@ class Name:
 
 class Button:
     def __init__(self, x, y, fonts, text_input, color, hovering_color):
+
         self.x = x
         self.y = y
         self.text_input = text_input
@@ -74,6 +76,7 @@ class Button:
         return False
 
     def changeColor(self, position):
+
         if position[0] in range(self.text_rect.left, self.text_rect.right) and position[1] in range(self.text_rect.top, self.text_rect.bottom):
             self.text = self.font.render(self.text_input, True, self.hovering_color)
         else:
@@ -87,35 +90,6 @@ class Clicked(ABC):
     @abstractmethod
     def buttonWasClicked(self, x, y, screen, fonts):
         pass
-
-
-class Play(Clicked):
-    def buttonWasClicked(self, x, y, screen, fonts):
-        while True:
-            play_screen = pygame.image.load("assets/game zone.jpg")
-            play_screen_rect = play_screen.get_rect()
-            screen.blit(play_screen, play_screen_rect)
-
-            mouse = pygame.mouse.get_pos()
-
-            play_text = fonts.render("The game is still in development", True, "White")
-            play_text_rect = play_text.get_rect(center=(x/2,  y/3))
-            screen.blit(play_text, play_text_rect)
-
-            PLAY_BACK = Button(x, y / 0.5, font(50), "BACK", "WHITE", "#dd25c3")
-            PLAY_BACK.changeColor(mouse)
-            PLAY_BACK.update(screen)
-
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    pygame.quit()
-                    sys.exit()
-                if event.type == pygame.MOUSEBUTTONDOWN:
-                    if PLAY_BACK.checkForInput(mouse):
-                        select_sound.play()
-                        MainClass()
-
-            pygame.display.update()
 
 
 class Option(Clicked):
@@ -176,7 +150,7 @@ class MainClass:
         pygame.display.set_caption("KPZFP'S PROJECT")
         self.x = 800
         self.y = 600
-        self.screen = pygame.display.set_mode((self.x, self.y))
+        self.screen = pygame.display.set_mode((self.x, self.y),vsync=1)
 
         self.sprites = pygame.sprite.Group()
         sprite = Sprites()
@@ -192,7 +166,6 @@ class MainClass:
             OPTIONS = Button(self.x / 1.6, self.y / 0.365, font(50), "OPTIONS", "WHITE", "#dd25c3")
             QUIT = Button(self.x / 0.637, self.y / 0.365, font(50), "QUIT", "WHITE", "#dd25c3")
 
-            play = Play()
             option = Option()
 
             mouse = pygame.mouse.get_pos()
@@ -204,7 +177,10 @@ class MainClass:
                 if event.type == pygame.MOUSEBUTTONDOWN:
                     if PLAY.checkForInput(mouse):
                         select_sound.play()
-                        play.buttonWasClicked(self.x, self.y, self.screen, font(20))
+                        game = Game(self.screen,Start)
+                        pygame.mixer.music.load("assets/Hotline Miami 2 - _Remorse_.ogg")
+                        pygame.mixer.music.play()
+                        game.run()
                     if OPTIONS.checkForInput(mouse):
                         select_sound.play()
                         option.buttonWasClicked(self.x, self.y, self.screen, font(45))
@@ -225,13 +201,21 @@ class MainClass:
             self.clock.tick(8)
 
 
+select_sound = pygame.mixer.Sound("assets/Game Menu Select.ogg")
+select_sound.set_volume(0.1)
+
+
+class Start:
+    def __init__(self):
+        pygame.mixer.music.load("assets/M.O.O.N - Dust (Synthwave).ogg",)
+        pygame.mixer.music.set_volume(0.2)
+        pygame.mixer.music.play()
+        start = MainClass()
+
+
 def font(size):
     return pygame.font.Font("assets/font.ttf", size)
 
 
-select_sound = pygame.mixer.Sound("assets/Game Menu Select.ogg")
-select_sound.set_volume(0.1)
-pygame.mixer.music.load("assets/M.O.O.N - Dust (Synthwave).ogg",)
-pygame.mixer.music.set_volume(0.2)
-pygame.mixer.music.play()
-stat = MainClass()
+if __name__ == '__main__':
+    program_start = Start()
